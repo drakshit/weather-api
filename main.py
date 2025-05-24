@@ -5,6 +5,7 @@ df = pd.read_csv("data_small/stations.txt", skiprows=17)
 headers = df.columns
 sta_id = headers[0]
 sta_name = headers[1]
+station_info = df[[sta_id,sta_name]]
 
 def read_file(station_id, date):
     file_name = f"data_small/TG_STAID{str(station_id).zfill(6)}.txt"
@@ -16,7 +17,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("home.html", data=station_info.to_html())
 
 
 # API route
